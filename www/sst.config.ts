@@ -10,7 +10,12 @@ export default {
   },
   stacks(app) {
     app.stack(function Site({ stack }) {
-      const site = new NextjsSite(stack, "site");
+      const site = new NextjsSite(stack, "site", {
+        environment: {
+          // kind of stupid that I need to put it here, it is not picked up from .env
+          NEYNAR_API_KEY: "<api-key>",
+        },
+      });
 
       stack.addOutputs({
         SiteUrl: site.url,

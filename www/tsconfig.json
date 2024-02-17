@@ -18,6 +18,9 @@
         "name": "next",
       },
     ],
+    "paths": {
+      "@/*": ["./src/*"],
+    },
     "jsx": "preserve",
     "resolveJsonModule": true,
     "skipLibCheck": true,

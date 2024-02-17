@@ -111,7 +111,7 @@ export const LoginWindow = ({
             farcasterUser?.signerApprovalUrl && (
               <div className="signer-approval-container mr-4">
                 Scan with your camera app
-                <QRCode value={farcasterUser.signerApprovalUrl} size={64} />
+                <QRCode value={farcasterUser.signerApprovalUrl} size={256} />
                 <div className="or-divider">OR</div>
                 <a
                   href={farcasterUser.signerApprovalUrl}

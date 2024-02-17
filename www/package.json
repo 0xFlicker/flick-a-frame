@@ -12,13 +12,16 @@
   },
   "dependencies": {
     "@noble/ed25519": "^2.0.0",
+    "@tanstack/react-query": "^5.20.5",
     "frames.js": "^0.5.0",
     "next": "14.1.0",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "satori": "^0.10.13",
-    "swr": "^2.2.4"
+    "swr": "^2.2.4",
+    "viem": "2.x",
+    "wagmi": "^2.5.7"
   },
   "engines": {
     "node": ">=18.17.0"
@@ -27,14 +30,15 @@
     "@types/node": "^18.17.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
+    "@wagmi/cli": "^2.1.1",
     "autoprefixer": "^10.0.1",
+    "aws-cdk-lib": "2.124.0",
+    "constructs": "10.3.0",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.1.0",
     "postcss": "^8",
-    "tailwindcss": "^3.3.0",
-    "typescript": "^5.3.3",
     "sst": "^2.40.3",
-    "aws-cdk-lib": "2.124.0",
-    "constructs": "10.3.0"
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.3.3"
   }
 }
