@@ -98,7 +98,7 @@ export default async function Home({
               }}
             >
               <div
-                tw="w-full h-full bg-slate-700 text-white justify-center items-top"
+                tw="w-full h-full bg-slate-700 text-white justify-center"
                 style={{
                   backgroundImage: `url('${baseUrl}/images/jack.png')`,
                   backgroundSize: "100% 100%",

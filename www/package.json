@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "sst bind next dev",
-    "build": "next build",
+    "build": "next build && cp -r fonts .open-next/server-function/",
     "start": "next start",
     "lint": "next lint",
     "update-debugger": "npx degit github:framesjs/frames.js/examples/framesjs-starter/app/debug#main app/debug --force",
