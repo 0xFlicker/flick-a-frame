@@ -1913,10 +1913,10 @@
     ethereum-cryptography "^2.0.0"
     micro-ftch "^0.3.1"
 
-"@farcaster/core@^0.13.7":
-  version "0.13.8"
-  resolved "https://registry.yarnpkg.com/@farcaster/core/-/core-0.13.8.tgz#b35033a05c6e2f7d2348a0f3509b92abed14c66a"
-  integrity sha512-h1WU5IinBwy8f5mGqyAQGxBGuCFPj+kYt/OQquE+898bdlU7LibwsAi2P2qD6Fkb+0GmqloF4m7DIg68wfpfWw==
+"@farcaster/core@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@farcaster/core/-/core-0.14.0.tgz#cd75058d24e95cc0640c77756e10692c72a52365"
+  integrity sha512-2K0hxvToytt37NGC0yrOOS09FC4FSZjdqmdr4/2ZGGTVaG0VXGOUxZGOMZSsm9wkBIvGHQ3s/nCFYiQrH2ZhZQ==
   dependencies:
     "@noble/curves" "^1.0.0"
     "@noble/hashes" "^1.3.0"
@@ -5369,7 +5369,7 @@ dotenv@^16.0.3:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.2.tgz#7ca798f89ae2011846bbdbf6470785307754120d"
   integrity sha512-rZSSFxke7d9nYQ5NeMIwp5PP+f8wXgKNljpOb7KtH6SKW1cEqcXAz9VSJYVLKe7Jhup/gUYOkaeSVyK8GJ+nBg==
 
-dotenv@^16.3.1:
+dotenv@^16.3.1, dotenv@^16.4.4:
   version "16.4.4"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.4.tgz#a26e7bb95ebd36272ebb56edb80b826aecf224c1"
   integrity sha512-XvPXc8XAQThSjAbY6cQ/9PcBXmFoWuw1sQ3b8HqUCR6ziGXjkTi//kB9SWa2UwqlgdAIuRqAa/9hVljzPehbYg==
@@ -6258,12 +6258,12 @@ fraction.js@^4.3.7:
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.3.7.tgz#06ca0085157e42fda7f9e726e79fefc4068840f7"
   integrity sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==
 
-frames.js@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/frames.js/-/frames.js-0.5.0.tgz#78d07881e1f3a513b6369d040169b143ec92163d"
-  integrity sha512-RGFYS9R3MBKss+P+6o+0Wymzat98EP76m6Q16JVz0Zw6SiKGzvUoyNY+AsveK2et98UxRjxwBeFkV4xDSut2PA==
+frames.js@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/frames.js/-/frames.js-0.5.1.tgz#fde3e7b8b6c33cfceadba7b27f9ae4c10fc1964f"
+  integrity sha512-gSbteFp2T+CgY/RupGn60xcARME4Zqp6FRklshkdwsvqsZS7dJcBDCNVr3CIlIQeLAoe9HtBBxKMmCixPGIU3Q==
   dependencies:
-    "@farcaster/core" "^0.13.7"
+    "@farcaster/core" "^0.14.0"
     "@vercel/og" "^0.6.2"
     cheerio "^1.0.0-rc.12"
     viem "^2.7.1"

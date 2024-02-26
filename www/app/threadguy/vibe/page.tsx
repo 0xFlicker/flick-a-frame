@@ -92,22 +92,8 @@ export default async function Home({
           >
             <FrameImage
               aspectRatio="1:1"
-              options={{
-                width: 400,
-                height: 400,
-              }}
-            >
-              <div
-                tw="w-full h-full bg-slate-700 text-white justify-center"
-                style={{
-                  backgroundImage: `url('${baseUrl}/images/jack.png')`,
-                  backgroundSize: "100% 100%",
-                  fontSize: "18px",
-                }}
-              >
-                {`${frameMessage?.requesterUserData?.displayName} voted over`}
-              </div>
-            </FrameImage>
+              src={`${baseUrl}/frames/image/threadguy/experimint?name=${encodeURIComponent(frameMessage?.requesterUserData?.displayName ?? "")}&type=JACK`}
+            />
             <FrameButton
               target="https://opensea.io/collection/tg-experimints"
               action="link"
@@ -125,23 +111,8 @@ export default async function Home({
           >
             <FrameImage
               aspectRatio="1:1"
-              options={{
-                width: 400,
-                height: 400,
-              }}
-            >
-              <div
-                tw="w-full h-full bg-slate-700 text-white justify-center items-top"
-                style={{
-                  backgroundImage: `url('${baseUrl}/images/mike.png')`,
-                  backgroundSize: "100% 100%",
-                  color: "black",
-                  fontSize: "18px",
-                }}
-              >
-                {`${frameMessage?.requesterUserData?.displayName} voted under`}
-              </div>
-            </FrameImage>
+              src={`${baseUrl}/frames/image/threadguy/experimint?name=${encodeURIComponent(frameMessage?.requesterUserData?.displayName ?? "")}&type=MIKE`}
+            />
             <FrameButton
               target="https://opensea.io/collection/tg-experimints"
               action="link"
@@ -157,16 +128,10 @@ export default async function Home({
             state={state}
             previousFrame={previousFrame}
           >
-            <FrameImage aspectRatio="1:1">
-              <div
-                tw="w-full h-full bg-slate-700 text-white justify-center items-center"
-                style={{
-                  fontSize: "350px",
-                }}
-              >
-                🫵😹
-              </div>
-            </FrameImage>
+            <FrameImage
+              aspectRatio="1:1"
+              src={`${baseUrl}/frames/image/threadguy/experimint?type=NO_VIBES`}
+            />
             <FrameButton
               target="https://opensea.io/collection/tg-experimints"
               action="link"
