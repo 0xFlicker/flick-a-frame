@@ -1,0 +1,10 @@
+mutation GetNonce($address: ID!, $chainId: Int!) {
+  nonceEthereum(address: $address, chainId: $chainId) {
+    nonce
+    messageToSign
+    pubKey
+    issuedAt
+    expiration
+    uri
+  }
+}

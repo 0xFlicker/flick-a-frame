@@ -1,0 +1,13 @@
+query getSelf {
+  self {
+    address
+    roles {
+      id
+    }
+    allowedActions {
+      action
+      resource
+    }
+    token
+  }
+}

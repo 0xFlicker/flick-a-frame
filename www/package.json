@@ -3,7 +3,8 @@
   "version": "0.1.10",
   "private": true,
   "scripts": {
-    "dev": "sst bind next dev",
+    "sst:dev": "sst bind next dev",
+    "dev": "next dev",
     "build": "next build && cp -r fonts .open-next/server-function/",
     "start": "next start",
     "lint": "next lint",
@@ -11,6 +12,11 @@
     "update-framesjs": "yarn upgrade frames.js@latest && yarn run update-debugger"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/base": "^5.0.0-beta.37",
+    "@mui/icons-material": "^5.15.11",
+    "@mui/material": "^5.15.11",
     "@noble/ed25519": "^2.0.0",
     "@tanstack/react-query": "^5.20.5",
     "frames.js": "^0.5.1",
@@ -18,6 +24,7 @@
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-spring": "^9.7.3",
     "satori": "^0.10.13",
     "swr": "^2.2.4",
     "viem": "2.x",

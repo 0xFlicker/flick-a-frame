@@ -9,6 +9,7 @@ import {
   useFramesReducer,
   getFrameMessage,
 } from "frames.js/next/server";
+import { Home } from "@/layouts/Home";
 import Link from "next/link";
 import { DEBUG_HUB_OPTIONS } from "./debug/constants";
 import { getTokenUrl } from "frames.js";
@@ -30,7 +31,7 @@ const reducer: FrameReducer<State> = (state, action) => {
 };
 
 // This is a react server component only
-export default async function Home({
+export default async function Page({
   params,
   searchParams,
 }: NextServerPageProps) {
@@ -54,16 +55,12 @@ export default async function Home({
 
   // then, when done, return next frame
   return (
-    <div className="p-4">
-      frames.js starter kit. The Template Frame is on this page, it&apos;s in
-      the html meta tags (inspect source).{" "}
-      <Link href={`/debug?url=${baseUrl}`} className="underline">
-        Debug
-      </Link>
+    <>
       <FrameContainer
         postUrl="/frames"
         state={state}
         previousFrame={previousFrame}
+        pathname="/"
       >
         {/* <FrameImage src="https://framesjs.org/og.png" /> */}
         <FrameImage>
@@ -92,6 +89,7 @@ export default async function Home({
           External
         </FrameButton>
       </FrameContainer>
-    </div>
+      <Home />
+    </>
   );
 }

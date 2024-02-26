@@ -1,0 +1,6 @@
+query GetAppInfo {
+  appInfo {
+    name
+    pubKey
+  }
+}
