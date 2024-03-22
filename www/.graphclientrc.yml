@@ -1,0 +1,8 @@
+sources:
+  - name: uniswap-v3-base
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/messari/uniswap-v3-base
+
+documents:
+  - ./src/**/graphql/*.graphql

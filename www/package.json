@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "update-debugger": "npx degit github:framesjs/frames.js/examples/framesjs-starter/app/debug#main app/debug --force",
-    "update-framesjs": "yarn upgrade frames.js@latest && yarn run update-debugger"
+    "update-framesjs": "yarn upgrade frames.js@latest && yarn run update-debugger",
+    "schema:types": "graphclient build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -19,7 +20,9 @@
     "@mui/material": "^5.15.11",
     "@noble/ed25519": "^2.0.0",
     "@tanstack/react-query": "^5.20.5",
-    "frames.js": "^0.5.1",
+    "frames.js": "^0.8.5",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6",
     "next": "14.1.0",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
@@ -34,6 +37,7 @@
     "node": ">=18.17.0"
   },
   "devDependencies": {
+    "@graphprotocol/client-cli": "^3.0.0",
     "@types/node": "^18.17.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
@@ -45,7 +49,7 @@
     "eslint": "^8.56.0",
     "eslint-config-next": "14.1.0",
     "postcss": "^8",
-    "sst": "^2.40.3",
+    "sst": "^2.41.3",
     "tailwindcss": "^3.3.0",
     "typescript": "^5.3.3"
   }
