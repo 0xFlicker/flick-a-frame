@@ -8352,7 +8352,7 @@ export function getBuiltGraphSDK<TGlobalContext = any, TOperationContext = any>(
 }
 export type SwapsQueryVariables = Exact<{
   account: Scalars['String'];
-  token: Scalars['ID'];
+  token: Scalars['String'];
 }>;
 
 
@@ -8367,10 +8367,8 @@ export type TokenPriceQuery = { token?: Maybe<Pick<Token, 'lastPriceUSD' | 'name
 
 
 export const SwapsDocument = gql`
-    query Swaps($account: String!, $token: ID!) {
-  swapsIn: swaps(
-    where: {account: $account, tokenIn: "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed"}
-  ) {
+    query Swaps($account: String!, $token: String!) {
+  swapsIn: swaps(where: {account: $account, tokenIn: $token}) {
     id
     amountIn
     amountInUSD

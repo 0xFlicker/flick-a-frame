@@ -7,14 +7,19 @@ import {
   useFramesReducer,
   getFrameMessage,
 } from "frames.js/next/server";
-import { createPublicClient, http, erc20Abi, formatUnits } from "viem";
+import {
+  createPublicClient,
+  http,
+  erc20Abi,
+  formatUnits,
+  isAddress,
+} from "viem";
 import { base } from "viem/chains";
 import { hubOptions } from "@/config";
 import { getBuiltGraphSDK } from "@/graphclient";
 
 enum EFlow {
   START,
-  TOKEN_CHECK,
   PAPER_HAND,
   DIAMOND_HAND,
   NO_TOKEN,
@@ -30,7 +35,9 @@ const DEGEN = "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed";
 const initialState = { step: EFlow.START };
 const publicClient = createPublicClient({
   chain: base,
-  transport: http(),
+  transport: http(process.env.BASE_RPC, {
+    batch: true,
+  }),
 });
 
 // This is a react server component only
@@ -45,6 +52,7 @@ export default async function Home({
   });
   console.log("info: frame message is:", frameMessage, previousFrame.prevState);
   if (frameMessage && !frameMessage?.isValid) {
+    console.warn("Invalid frame payload");
     throw new Error("Invalid frame payload");
   }
   let tokenGain = 0;
@@ -55,67 +63,67 @@ export default async function Home({
   let tokenGainIfHeld = 0;
   let tokenDecimals = 18;
   let isError = false;
-  if (previousFrame.prevState?.step === EFlow.TOKEN_CHECK) {
-    try {
-      const sdk = getBuiltGraphSDK();
-      const [tokenBalances, decimals, tokenDetails, ...responses] =
-        await Promise.all([
-          Promise.all(
-            frameMessage?.requesterVerifiedAddresses.map((address) =>
-              publicClient.readContract({
-                abi: erc20Abi,
-                address: DEGEN,
-                functionName: "balanceOf",
-                args: [address as `0x${string}`],
-              })
-            ) ?? []
-          ),
-          publicClient.readContract({
-            abi: erc20Abi,
-            address: DEGEN,
-            functionName: "decimals",
-          }),
-          sdk.TokenPrice({
-            token: DEGEN,
-          }),
-          ...(frameMessage?.requesterVerifiedAddresses.map((address) =>
-            sdk.Swaps({
-              account: address,
-              token: DEGEN,
+  let currentPrice = 0;
+  try {
+    const sdk = getBuiltGraphSDK();
+    const allAddresses = [
+      frameMessage?.requesterCustodyAddress,
+      ...(frameMessage?.requesterVerifiedAddresses ?? []),
+    ].filter((address) => address && isAddress(address));
+    const [tokenBalances, decimals, tokenDetails, ...responses] =
+      await Promise.all([
+        Promise.all(
+          allAddresses.map((address) =>
+            publicClient.readContract({
+              abi: erc20Abi,
+              address: DEGEN,
+              functionName: "balanceOf",
+              args: [address as `0x${string}`],
             })
-          ) ?? []),
-        ]);
+          ) ?? []
+        ),
+        publicClient.readContract({
+          abi: erc20Abi,
+          address: DEGEN,
+          functionName: "decimals",
+        }),
+        sdk.TokenPrice({
+          token: DEGEN,
+        }),
+        ...(allAddresses.map((address) =>
+          sdk.Swaps({
+            account: address!,
+            token: DEGEN,
+          })
+        ) ?? []),
+      ]);
+    // Tally up current pnl
 
-      // Tally up current pnl
+    currentPrice = tokenDetails.token?.lastPriceUSD
+      ? Number(tokenDetails.token?.lastPriceUSD)
+      : 0;
+    tokenName = tokenDetails.token?.name ?? "DEGEN";
+    tokenSymbol = tokenDetails.token?.symbol ?? "DEGEN";
 
-      const currentPrice = tokenDetails.token?.lastPriceUSD ?? 0;
-      tokenName = tokenDetails.token?.name ?? "DEGEN";
-      tokenSymbol = tokenDetails.token?.symbol ?? "DEGEN";
-      for (const response of responses) {
-        for (const swapIn of response.swapsIn) {
-          tokenSold += BigInt(swapIn.amountIn.toString());
-          tokenGain += Number(swapIn.amountInUSD.toString());
-        }
+    for (const response of responses) {
+      for (const swapIn of response.swapsIn) {
+        console.log("info: swap in is:", swapIn);
+        tokenSold += BigInt(swapIn.amountIn.toString());
+        tokenGain += Number(swapIn.amountInUSD.toString());
       }
-      tokenGainIfHeld +=
-        Number(formatUnits(tokenSold, decimals)) * Number(currentPrice);
-      tokenBalance = tokenBalances.reduce((acc, balance) => acc + balance, 0n);
-      tokenDecimals = Number(decimals);
-    } catch (e) {
-      console.error(e);
-      isError = true;
     }
+    tokenGainIfHeld += Number(formatUnits(tokenSold, decimals)) * currentPrice;
+    tokenBalance = tokenBalances.reduce((acc, balance) => acc + balance, 0n);
+    tokenDecimals = Number(decimals);
+  } catch (e) {
+    console.error("failed", e);
+    isError = true;
   }
 
   const [state, dispatch] = useFramesReducer<State>(
     (state, action) => {
       console.log("info: previous state is:", state);
       if (state.step === EFlow.START) {
-        return {
-          step: EFlow.TOKEN_CHECK,
-        };
-      }
-      if (state.step === EFlow.TOKEN_CHECK) {
         if (isError) {
           return {
             error: "Failed to fetch token data. Please try again later.",
@@ -123,7 +131,7 @@ export default async function Home({
           };
         }
 
-        if (tokenGain > 0n) {
+        if (tokenGainIfHeld > tokenGain) {
           return {
             step: EFlow.PAPER_HAND,
           };
@@ -195,7 +203,7 @@ export default async function Home({
                       fontSize: "48",
                     }}
                   >
-                    {tokenGainIfHeld > tokenSold && (
+                    {tokenGainIfHeld > tokenGain && (
                       <p
                         style={{
                           fontSize: "220px",
@@ -204,8 +212,8 @@ export default async function Home({
                         🫵😹
                       </p>
                     )}
-                    <p>{`You sold ${Number(tokenSold)} $${tokenSymbol}`}</p>
-                    <p>{`for $${tokenGain.toFixed(2)}}`}</p>
+                    <p>{`you sold ${formatUnits(tokenSold, tokenDecimals)} $${tokenSymbol}`}</p>
+                    <p>{`for $${tokenGain.toFixed(2)}`}</p>
                     <p>{`if held today would be worth $${Number(tokenGainIfHeld).toFixed(2)}`}</p>
                   </div>
                 </FrameImage>
@@ -213,6 +221,12 @@ export default async function Home({
             );
 
           case EFlow.DIAMOND_HAND:
+            const value =
+              currentPrice * Number(formatUnits(tokenBalance, tokenDecimals));
+            const [winningValue, worthNow] =
+              tokenGain > tokenGainIfHeld
+                ? [tokenGain, tokenGainIfHeld]
+                : [null, null];
             return (
               <FrameContainer
                 pathname="/degen-hand"
@@ -236,8 +250,15 @@ export default async function Home({
                     >
                       💎🙌
                     </p>
-                    <p>{`You have ${formatUnits(tokenBalance, tokenDecimals)} $${tokenSymbol}`}</p>
-                    <p>{`worth $${Number(tokenGainIfHeld).toFixed(2)}`}</p>
+                    {winningValue && worthNow && (
+                      <>
+                        <p>{`you sold ${formatUnits(tokenSold, tokenDecimals)} $${tokenSymbol}`}</p>
+                        <p>{`for $${winningValue.toFixed(2)}`}</p>
+                        <p>{`if held today would be worth $${tokenGainIfHeld.toFixed(2)}`}</p>
+                      </>
+                    )}
+                    <p>{`you have ${formatUnits(tokenBalance, tokenDecimals)} $${tokenSymbol}`}</p>
+                    <p>{`worth $${value.toFixed(2)}`}</p>
                   </div>
                 </FrameImage>
               </FrameContainer>

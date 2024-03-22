@@ -1,10 +1,5 @@
-query Swaps($account: String!, $token: ID!) {
-  swapsIn: swaps(
-    where: {
-      account: $account
-      tokenIn: "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed"
-    }
-  ) {
+query Swaps($account: String!, $token: String!) {
+  swapsIn: swaps(where: { account: $account, tokenIn: $token }) {
     id
     amountIn
     amountInUSD
