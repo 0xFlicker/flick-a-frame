@@ -1,8 +1,0 @@
-query getSelfPermissions {
-  self {
-    allowedActions {
-      action
-      resource
-    }
-  }
-}

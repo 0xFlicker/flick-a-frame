@@ -1,5 +1,0 @@
-mutation web3SignIn($address: ID!, $jwe: String!) {
-  siwe(address: $address, jwe: $jwe) {
-    token
-  }
-}
