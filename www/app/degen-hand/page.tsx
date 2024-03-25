@@ -212,7 +212,7 @@ export default async function Home({
                         🫵😹
                       </p>
                     )}
-                    <p>{`you sold ${formatUnits(tokenSold, tokenDecimals)} $${tokenSymbol}`}</p>
+                    <p>{`you sold ${Number(formatUnits(tokenSold, tokenDecimals)).toFixed(0)} $${tokenSymbol}`}</p>
                     <p>{`for $${tokenGain.toFixed(2)}`}</p>
                     <p>{`if held today would be worth $${Number(tokenGainIfHeld).toFixed(2)}`}</p>
                   </div>
@@ -252,12 +252,12 @@ export default async function Home({
                     </p>
                     {winningValue && worthNow && (
                       <>
-                        <p>{`you sold ${formatUnits(tokenSold, tokenDecimals)} $${tokenSymbol}`}</p>
+                        <p>{`you sold ${Number(formatUnits(tokenSold, tokenDecimals)).toFixed(0)} $${tokenSymbol}`}</p>
                         <p>{`for $${winningValue.toFixed(2)}`}</p>
                         <p>{`if held today would be worth $${tokenGainIfHeld.toFixed(2)}`}</p>
                       </>
                     )}
-                    <p>{`you have ${formatUnits(tokenBalance, tokenDecimals)} $${tokenSymbol}`}</p>
+                    <p>{`you have ${Number(formatUnits(tokenBalance, tokenDecimals)).toFixed(0)} $${tokenSymbol}`}</p>
                     <p>{`worth $${value.toFixed(2)}`}</p>
                   </div>
                 </FrameImage>

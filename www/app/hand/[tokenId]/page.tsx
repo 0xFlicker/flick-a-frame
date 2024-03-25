@@ -168,7 +168,7 @@ export default async function Home({
           case EFlow.START: {
             return (
               <FrameContainer
-                pathname="/degen-hand"
+                pathname={`/hand/${tokenId}`}
                 postUrl="/frames"
                 state={state}
                 previousFrame={previousFrame}
@@ -195,7 +195,7 @@ export default async function Home({
           case EFlow.PAPER_HAND:
             return (
               <FrameContainer
-                pathname="/degen-hand"
+                pathname={`/hand/${tokenId}`}
                 postUrl="/frames"
                 state={state}
                 previousFrame={previousFrame}
@@ -218,7 +218,7 @@ export default async function Home({
                         🫵😹
                       </p>
                     )}
-                    <p>{`you sold ${formatUnits(tokenSold, tokenDecimals)} $${tokenSymbol}`}</p>
+                    <p>{`you sold ${Number(formatUnits(tokenSold, tokenDecimals)).toFixed(0)} $${tokenSymbol}`}</p>
                     <p>{`for $${tokenGain.toFixed(2)}`}</p>
                     <p>{`if held today would be worth $${Number(tokenGainIfHeld).toFixed(2)}`}</p>
                   </div>
@@ -235,7 +235,7 @@ export default async function Home({
                 : [null, null];
             return (
               <FrameContainer
-                pathname="/degen-hand"
+                pathname={`/hand/${tokenId}`}
                 postUrl="/frames"
                 state={state}
                 previousFrame={previousFrame}
@@ -267,12 +267,12 @@ export default async function Home({
                         >
                           👑
                         </p>
-                        <p>{`you sold ${formatUnits(tokenSold, tokenDecimals)} $${tokenSymbol}`}</p>
+                        <p>{`you sold ${Number(formatUnits(tokenSold, tokenDecimals)).toFixed(0)} $${tokenSymbol}`}</p>
                         <p>{`for $${winningValue.toFixed(2)}`}</p>
                         <p>{`if held today would be worth $${tokenGainIfHeld.toFixed(2)}`}</p>
                       </>
                     )}
-                    <p>{`you have ${formatUnits(tokenBalance, tokenDecimals)} $${tokenSymbol}`}</p>
+                    <p>{`you have ${Number(formatUnits(tokenBalance, tokenDecimals)).toFixed(0)} $${tokenSymbol}`}</p>
                     <p>{`worth $${value.toFixed(2)}`}</p>
                   </div>
                 </FrameImage>
@@ -282,7 +282,7 @@ export default async function Home({
           case EFlow.NO_TOKEN:
             return (
               <FrameContainer
-                pathname="/degen-hand"
+                pathname={`/hand/${tokenId}`}
                 postUrl="/frames"
                 state={state}
                 previousFrame={previousFrame}
